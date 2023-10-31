@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>belajar react</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+
+      function Header(props) {
+        return (
+          <>
+            <h1>belajar react bareng pa {props.name} 🚀🚀🚀</h1>
+          </>
+        );
+      }
+      let jumlhLike = 0;
+
+      function handleClick() {
+        jumlhLike++;
+      }
+      function Profil() {
+        return (
+          <>
+            <img src="profile.png" />
+            <h2>rahmad suryadi</h2>
+          </>
+        );
+      }
+
+      function Btn(props) {
+        return (
+          <>
+            <button disabled={props.isDisable} onClick={props.action}>
+              {props.text}
+            </button>
+          </>
+        );
+      }
+      function Counter() {
+        const [count, setcount] = React.useState(0);
+        let isDisable = false;
+
+        function reset() {
+          setcount(0);
+          isDisable = false;
+        }
+        function isDisableHandle() {
+          if (count >= 10 || count < 0) {
+            setcount("done!");
+            isDisable = true;
+          } else if (count == "done!") {
+            isDisable = true;
+          } else {
+            isDisable = false;
+          }
+
+          return isDisable;
+        }
+
+        return (
+          <div>
+            <Btn
+              isDisable={isDisableHandle()}
+              action={() => setcount(count - 1)}
+              text="-"
+            />
+            <text>{count}</text>
+            <Btn
+              isDisable={isDisableHandle()}
+              action={() => setcount(count + 1)}
+              text="+"
+            />
+            <div>
+              <Btn isDisable={!isDisable} action={reset} text="reset!" />
+            </div>
+          </div>
+        );
+      }
+
+      function HomePage() {
+        const students = ["yadi", "izza", "Jhonny"];
+        const [likes, setlikes] = React.useState(0);
+
+        function handleClickState() {
+          setlikes(likes + 1);
+          console.log(likes);
+        }
+        return (
+          <>
+            <Header name="dhika" />
+            <Profil />
+            <lu>
+              {students.map((student, i) => (
+                <li key={i}>{student}</li>
+              ))}
+            </lu>
+            <button onClick={handleClickState}>likeState{likes}</button>
+            <button onClick={handleClick}>like{jumlhLike}</button>
+            <Counter />
+          </>
+        );
+      }
+      root.render(
+        <>
+          <HomePage />
+        </>
+      );
+    </script>
+  </body>
+</html>
